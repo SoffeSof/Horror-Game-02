@@ -6,16 +6,22 @@ public class PlayerMovement : MonoBehaviour
 {
     //https://www.youtube.com/watch?v=_QajrabyTJc&t=10s tutorial by Brackeys
     //https://www.youtube.com/watch?v=yTKsQ7jucxg
-    public CharacterController controller;
     
-    private float gravity = -9.81f*3;
-    private float movementSpeed = 12f;
-    private float sprintSpeed = 20f;
+    
+    // Player Controller
+    public CharacterController controller;
+
+    // Movement Variables
+    private float movementSpeed = 9f;
+    private float sprintSpeed = 16f;
+    private float currentSpeed;
+
+    // Gravity and Jump Variables
+    private float gravity = -9.81f * 3;
     private float jumpHeight = 2f;
     private Vector3 velocity;
 
-    private float currentSpeed;
-
+    // Ground Detection Variables
     public Transform groundCheck;
     private float groundDistance = 0.4f;
     public LayerMask groundMask;
@@ -37,14 +43,15 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded) // Sprint
+        if (Input.GetKey(KeyCode.LeftShift) && isGrounded) // Sprint
         {
             currentSpeed = sprintSpeed; // Increase speed for sprinting
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) // Stop sprinting
+        else
         {
             currentSpeed = movementSpeed; // Reset speed to normal
         }
+
         Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * currentSpeed * Time.deltaTime);
