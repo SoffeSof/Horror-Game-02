@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3477588570032898336}
   - component: {fileID: 8479985494238359051}
   - component: {fileID: 8979740882490315739}
+  - component: {fileID: 1577521909163436352}
   m_Layer: 0
   m_Name: battery
   m_TagString: Interactable
@@ -125,10 +126,10 @@ MonoBehaviour:
   interactEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1123693314251274}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1577521909163436352}
+        m_TargetAssemblyTypeName: Battery, Assembly-CSharp
+        m_MethodName: ChargeFlashlight
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -137,6 +138,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  itemType: {fileID: 11400000, guid: a8b360b5c915624418264c0d899e948f, type: 2}
 --- !u!64 &8479985494238359051
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -177,3 +179,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &1577521909163436352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123693314251274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76fb6968ad18aad41b94e7b18024ec4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 50
+  flashlight: {fileID: 0}
+  inventoryManager: {fileID: 0}
+  battery: {fileID: 11400000, guid: a8b360b5c915624418264c0d899e948f, type: 2}

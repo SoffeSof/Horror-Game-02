@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Battery : MonoBehaviour
 {
-    //This needs to inheret from Item
     [SerializeField] private float energy = 20f;
     public Flashlight flashlight;
     public InventoryManager inventoryManager;
     public Item battery;
-
     public void ChargeFlashlight()
     {
         if (flashlight.Energy + energy > 100)
@@ -25,9 +23,16 @@ public class Battery : MonoBehaviour
 
     public void AddToInventory()
     {
-        inventoryManager.Additem(battery);
-        Debug.Log("Battery placed in inventory");
-        Destroy(gameObject);
+        bool isInventoryFull = inventoryManager.AddItem(battery);
+        if (isInventoryFull == false)
+        {
+            Debug.Log("Battery placed in inventory");
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("Inventory is full");
+        }
     }
 
 

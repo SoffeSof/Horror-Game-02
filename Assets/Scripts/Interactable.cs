@@ -9,6 +9,7 @@ public class Interactable : MonoBehaviour
     public string displayMessage;
 
     public UnityEvent interactEvent;
+    public Item itemType;
 
 
     // Start is called before the first frame update

@@ -10,6 +10,7 @@ public class Item : ScriptableObject
     public Sprite image;
     public itemType type;
     public bool isStackable = true;
+    public int maxStackSize = 1;
 
     public enum itemType
     {
