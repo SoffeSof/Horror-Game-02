@@ -10,14 +10,14 @@ public class Flashlight : MonoBehaviour
     public AudioSource flickerSound;
     public GameObject flashlightObject;
 
-    private float _energy = 40f; // Private backing field
+    [SerializeField] private float _energy = 100f; // Private backing field
 
     public float Energy
     {
         get { return _energy; }
         set { _energy = Mathf.Clamp(value, 0f, 100f); } // Clamps the value between 0 and 100
     }
-    private float energyDrainRate = 100f/120f; // Energy drain rate of the flashlight per second, 2 minutes to drain a flashlight
+    private float energyDrainRate = 100f/180f; // Energy drain rate of the flashlight per second, 2 minutes to drain a flashlight
 
     //Flickering variables
     public float minTime = 0.1f;
