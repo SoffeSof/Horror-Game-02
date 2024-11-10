@@ -26,9 +26,9 @@ public class InventoryManager : MonoBehaviour
         {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.maxStackSize)
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.maxStackSize && itemInSlot.item.isStackable == true)
             {
-                //Spawn new item
+                //Add count to the item stack
                 itemInSlot.count++;
                 itemInSlot.UpdateCount();
 
