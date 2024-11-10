@@ -7,7 +7,8 @@ public class Battery : MonoBehaviour
     [SerializeField] private float energy = 20f;
     public Flashlight flashlight;
     public InventoryManager inventoryManager;
-    public Item battery;
+    public Item itemType;
+
     public void ChargeFlashlight()
     {
         if (flashlight.Energy + energy > 100)
@@ -23,7 +24,7 @@ public class Battery : MonoBehaviour
 
     public void AddToInventory()
     {
-        bool isInventoryFull = inventoryManager.AddItem(battery);
+        bool isInventoryFull = inventoryManager.AddItem(itemType);
         if (isInventoryFull == false)
         {
             Debug.Log("Battery placed in inventory");

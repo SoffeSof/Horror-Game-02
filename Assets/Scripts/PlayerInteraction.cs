@@ -13,6 +13,7 @@ public class PlayerInteraction : MonoBehaviour
         CheckForInteractable();
         if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
         {
+            Debug.Log("E pressed");
             currentInteractable.Interact();
         }
     }
