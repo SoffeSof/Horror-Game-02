@@ -30,10 +30,12 @@ public class HUDController : MonoBehaviour
 
     public void EnableInteractionText(string text, Item item)
     {
+        Debug.Log("2");
         bool isInventoryFull = inventoryManager.CheckInventorySpace(item);
         if (isInventoryFull)
         {
             interactionText.text = "Inventory is full";
+            Debug.Log("3");
         }
         else //There needs to be implemented logic in the CheckForInventory space that items can be stackable, and just because the inventory is full, it doesn't mean that the item can't be picked up and added to a stack
         {

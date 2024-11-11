@@ -83,9 +83,9 @@ public class InventoryManager : MonoBehaviour
         {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.maxStackSize)
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.maxStackSize && itemInSlot.item.isStackable == true)
             {
-                //If there are any slots with the same type of item and the count is less than maxStack, return false
+                //If there are any slots with the same type of item and the count is less than maxStack and is stackable, return false
                 return false;
             }
         }
