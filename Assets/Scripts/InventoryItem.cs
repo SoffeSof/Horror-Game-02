@@ -19,6 +19,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         item = newItem;
         itemImage.sprite = newItem.image;
+        AddScriptComponent();
         UpdateCount();
     }  
 
@@ -50,5 +51,36 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Debug.Log("OnEndDrag");
         transform.SetParent(parentAfterDrag);
         itemImage.raycastTarget = true;
+    }
+
+    private void AddScriptComponent()
+    {
+        Debug.Log(item.type);
+        switch (item.type)
+            {
+            case Item.itemType.Battery:
+                gameObject.AddComponent<Battery>();
+                Debug.Log("Battery item detected!");
+                break;
+            case Item.itemType.Medkit:
+                gameObject.AddComponent<Medkit>();
+                Debug.Log("Medkit item detected!");
+                break;
+            case Item.itemType.Key:
+                // Add logic for Key if required
+                Debug.Log("Key item detected!");
+                break;
+            case Item.itemType.Note:
+                // Add logic for Note if required
+                Debug.Log("Note item detected!");
+                break;
+            case Item.itemType.Pills:
+                gameObject.AddComponent<Pills>();
+                Debug.Log("Pills item detected!");
+                break;
+            default:
+                Debug.LogWarning("Unhandled item type: " + item.type);
+                break;
+            }
     }
 }

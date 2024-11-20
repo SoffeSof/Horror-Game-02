@@ -11,6 +11,7 @@ public class Item : ScriptableObject
     public itemType type;
     public bool isStackable = true;
     public int maxStackSize = 1;
+    
 
     public enum itemType
     {

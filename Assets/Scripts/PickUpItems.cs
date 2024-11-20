@@ -7,7 +7,12 @@ public class PickUpItems : MonoBehaviour
     public InventoryManager inventoryManager;
     public Item itemType;
 
-    public void AddToInventory()
+    private void Awake()
+    {
+        inventoryManager = FindObjectOfType<InventoryManager>();	
+    }
+
+    public virtual void AddToInventory()
     {
         bool isInventoryFull = inventoryManager.AddItem(itemType);
         if (isInventoryFull == false)
@@ -19,5 +24,10 @@ public class PickUpItems : MonoBehaviour
         {
             Debug.Log("Inventory is full");
         }
+    }
+
+    public virtual void UseItem()
+    {
+        Debug.Log("Item used");
     }
 }

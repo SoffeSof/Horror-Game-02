@@ -61,7 +61,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         currentInteractable = newInteractable;
         currentInteractable.EnableOutline();
-        Debug.Log("1");
         HUDController.Instance.EnableInteractionText(currentInteractable.displayMessage, currentInteractable.itemType);
     }
 

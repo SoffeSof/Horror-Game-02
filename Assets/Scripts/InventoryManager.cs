@@ -10,15 +10,24 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryPanel;
     public MouseLook mouseLook;
 
+    private int selectedSlotIndex = -1;
+
     private void Update()
+    {
+        // Check for the "I" key press to toggle inventory
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            // Check for the "I" key press to toggle inventory
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                ToggleInventory();
-            }
+            ToggleInventory();
         }
 
+        if (Input.GetMouseButtonDown(1) && selectedSlotIndex > -1) // 1 is the right mouse button
+        {
+            UseSelectedItem();
+        }
+
+        CheckForSlotChange();
+    }
+    
     public bool AddItem(Item item) //finds the first empty slot and adds the item to it
     {
         //Check if any slot has the same item with count lower than maxStack
@@ -104,4 +113,61 @@ public class InventoryManager : MonoBehaviour
         return true; //if there are no empty slots and no available stacks, return true
     }
 
+    private void ChangeSelectedSlot(int newSlotIndex)
+    {
+        // If the new slot is the same as the current selected slot, deselect it
+        if (selectedSlotIndex == newSlotIndex)
+        {
+            inventorySlots[selectedSlotIndex].Deselect();
+            selectedSlotIndex = -1; // No slot is selected
+        }
+        else
+        {
+            // If there was a previously selected slot, deselect it
+            if (selectedSlotIndex >= 0)
+            {
+                inventorySlots[selectedSlotIndex].Deselect();
+            }
+            
+            // Select the new slot and update the selectedSlotIndex
+            inventorySlots[newSlotIndex].Select();
+            selectedSlotIndex = newSlotIndex;
+        }
+    }
+
+    private void CheckForSlotChange()
+    {
+        if (Input.inputString != null)
+        {
+            bool isNumber = int.TryParse(Input.inputString, out int slotIndex);
+            if (isNumber && slotIndex > 0 && slotIndex < 8)
+            {
+                ChangeSelectedSlot(slotIndex - 1);
+            }
+        }
+    }
+
+    private void UseSelectedItem()
+    {
+        InventorySlot slot = inventorySlots[selectedSlotIndex];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null)
+        {
+            itemInSlot.count--;
+            PickUpItems itemScript = itemInSlot.GetComponent<PickUpItems>();
+            if (itemScript != null)
+            {
+                itemScript.UseItem();
+            }
+            //Code that calls UseItem() method from the correct script script
+                if (itemInSlot.count <= 0)
+                {
+                    Destroy(itemInSlot.gameObject);
+                }
+                else
+                {
+                    itemInSlot.UpdateCount();
+                }
+        }
+    }
 }
