@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1571097369727997535}
   - component: {fileID: 8180163021768439773}
   - component: {fileID: 8971914376804274437}
-  - component: {fileID: 969550131659306219}
+  - component: {fileID: 5094330426366171533}
   m_Layer: 0
   m_Name: pills
   m_TagString: Interactable
@@ -104,7 +104,7 @@ MonoBehaviour:
   interactEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 969550131659306219}
+      - m_Target: {fileID: 5094330426366171533}
         m_TargetAssemblyTypeName: PickUpItems, Assembly-CSharp
         m_MethodName: AddToInventory
         m_Mode: 1
@@ -158,7 +158,7 @@ CapsuleCollider:
   m_Height: 0.36
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &969550131659306219
+--- !u!114 &5094330426366171533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,8 +167,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1985338178271116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2c18a2fac16f841b1099c505f5a93d, type: 3}
+  m_Script: {fileID: 11500000, guid: d02a7f4328d0fca479fc064f025aea60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
   itemType: {fileID: 11400000, guid: 4b7f4be168bb6be4ca670a56dbcdf1dc, type: 2}
+  HealthValue: 10
+  healthbar: {fileID: 0}
