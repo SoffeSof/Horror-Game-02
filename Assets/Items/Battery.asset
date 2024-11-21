@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 739e879cd68e6f748bc110415b22d916, type: 3}
   type: 0
-  isStackable: 0
+  isStackable: 1
   maxStackSize: 5

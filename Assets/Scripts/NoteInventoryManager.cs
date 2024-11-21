@@ -12,13 +12,24 @@ public class NoteInventoryManager : MonoBehaviour
     public TMP_Text noteContent;
     public Transform notesParent;
 
+    [SerializeField] private float _notesCollected = 100f; // Private backing field
+
+    public float NotesCollected //Single source of truth principle
+    {
+        get { return _notesCollected; }
+        set {
+                _notesCollected = Mathf.Clamp(value, 0f, 6f); 
+                HUDController.Instance.UpdateNotesCollected();
+            }
+    }
+
     //Colors
     public Color unlockedColor;
 
      // Variable to track the currently selected note
     private int currentlySelectedNote = -1;
 
-    private Dictionary<int, string> noteContents = new Dictionary<int, string>()
+    private Dictionary<int, string> noteContents = new Dictionary<int, string>() //Using 0-based index
 {
     { 0, "This is the content for Note 1" },
     { 1, "This is the content for Note 2" },
@@ -30,6 +41,7 @@ public class NoteInventoryManager : MonoBehaviour
 
     void Start()
     {
+        NotesCollected = 0; // Set the notes collected to the initial value
         // Get all TMP_Text components only under the specific parent
         notes = notesParent.GetComponentsInChildren<TMP_Text>();
         noteButtons = notesParent.GetComponentsInChildren<Button>();
@@ -66,6 +78,8 @@ public class NoteInventoryManager : MonoBehaviour
             {
                 noteButtons[noteNumber].interactable = true; // Enable the button for the note
             }
+
+            NotesCollected++;
         }
         else
         {

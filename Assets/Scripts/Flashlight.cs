@@ -15,7 +15,10 @@ public class Flashlight : MonoBehaviour
     public float Energy
     {
         get { return _energy; }
-        set { _energy = Mathf.Clamp(value, 0f, 100f); } // Clamps the value between 0 and 100
+        set { 
+                _energy = Mathf.Clamp(value, 0f, 100f);
+                HUDController.Instance.UpdateBatteryText();
+            } // Clamps the value between 0 and 100
     }
     private float energyDrainRate = 100f/180f; // Energy drain rate of the flashlight per second, 2 minutes to drain a flashlight
 
@@ -24,14 +27,11 @@ public class Flashlight : MonoBehaviour
     public float maxTime = 0.2f;
     public float Timer;
 
-
-    // Move flashlight up and down
-    public float putAwaySpeed = 5f; // Speed of movement when putting away or bringing back the flashlight
-
     void Start()
     {
         Timer = Random.Range(minTime, maxTime);
         flickerSound.loop = true;
+        Energy = 100f;
     }
     
     void Update()
@@ -47,21 +47,14 @@ public class Flashlight : MonoBehaviour
                 flashlight.enabled = false;
                 flickerSound.Stop();
                 clickSound.Play();
-                MoveFlashlight();
             }
             else
             {
                 isOn = true;
                 flashlight.enabled = true;
                 clickSound.Play();
-                MoveFlashlight();
             }
         }
-    }
-
-    private void MoveFlashlight()
-    {
-        //Maybe for moving up and down?
     }
 
     private void DrainEnergy()
