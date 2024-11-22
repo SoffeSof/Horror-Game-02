@@ -173,4 +173,3 @@ MonoBehaviour:
   inventoryManager: {fileID: 0}
   itemType: {fileID: 11400000, guid: 4b7f4be168bb6be4ca670a56dbcdf1dc, type: 2}
   HealthValue: 10
-  healthbar: {fileID: 0}

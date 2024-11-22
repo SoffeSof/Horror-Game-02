@@ -170,3 +170,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
   itemType: {fileID: 11400000, guid: 1b420f8a41f635d48a0f68c7ed8bc3d1, type: 2}
+  HealthValue: 25
