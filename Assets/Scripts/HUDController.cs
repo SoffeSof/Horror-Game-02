@@ -17,12 +17,12 @@ public class HUDController : MonoBehaviour
     [SerializeField] private TMP_Text notesText;
     [SerializeField] private TMP_Text batteryText;
 
-
     //Healthbar variables
     //HealthbarTutorial followed: https://www.youtube.com/watch?v=BLfNP4Sc_iA&t=50s by Brackeys
     public Slider slider;
     public Gradient gradient;
     public Image fill;
+    private float healthDrainRate = 100f/500f;
 
     //Get set for health
     [SerializeField] private float _health = 100f; // Private backing field
@@ -65,6 +65,11 @@ public class HUDController : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    void Update()
+    {
+        DrainHealth();
     }
 
     public void EnableInteractionText(string text, Item item)
@@ -112,5 +117,13 @@ public class HUDController : MonoBehaviour
     public void UpdateBatteryText()
     {
         batteryText.text = $"Battery: {flashlight.Energy:F0}%"; // F0 formats it as a whole number (no decimal places)
+    }
+
+    private void DrainHealth()
+    {
+        if (flashlight.isOn)
+        {
+            Health -= healthDrainRate * Time.deltaTime;
+        }
     }
 }

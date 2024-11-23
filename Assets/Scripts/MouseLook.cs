@@ -19,7 +19,7 @@ public class MouseLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Locks the cursor in the center of the screen and makes it invisible
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (isInventoryOpen == false)
         {
