@@ -8,6 +8,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryItemPrefab;
 
     public GameObject inventoryPanel;
+    public GameObject noteInventory;
+    public GameObject keyInventory;
+    public GameObject itemInventory;
     public MouseLook mouseLook;
 
     private int selectedSlotIndex = -1;
@@ -80,6 +83,9 @@ public class InventoryManager : MonoBehaviour
         else
         {
             // Close the inventory: hide panel and lock cursor
+            noteInventory.SetActive(false);
+            keyInventory.SetActive(false);
+            itemInventory.SetActive(true);
             inventoryPanel.SetActive(false);
             mouseLook.isInventoryOpen = false;
             Cursor.lockState = CursorLockMode.Locked;

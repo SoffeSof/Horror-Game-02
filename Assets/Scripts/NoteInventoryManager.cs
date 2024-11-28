@@ -11,6 +11,7 @@ public class NoteInventoryManager : MonoBehaviour
     public Button[] noteButtons;
     public TMP_Text noteContent;
     public Transform notesParent;
+    private string defaultText = "No note selected";
 
     [SerializeField] private float _notesCollected = 100f; // Private backing field
 
@@ -122,7 +123,7 @@ public class NoteInventoryManager : MonoBehaviour
     public void DeselectNote()
     {
         notes[currentlySelectedNote].fontStyle = FontStyles.Normal;
-        noteContent.text = ""; // Clear the content display
+        noteContent.text = defaultText; // Clear the content display
         currentlySelectedNote = -1; // No note is selected
     }
 }

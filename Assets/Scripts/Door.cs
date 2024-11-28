@@ -11,6 +11,7 @@ public class Door : MonoBehaviour
     public bool isOpen = false;
     public bool isLocked = false;
     private bool isAnimating = false;
+    public bool hasKey = false;
 
     //Door Movement Variables
     public float openSpeed = 0.5f;
@@ -18,17 +19,17 @@ public class Door : MonoBehaviour
     public float openAngle = 90.0f;
     public float closeAngle = 0.0f;
 
-    private float currentAngle = 0.0f;
-
     //Display messages
     public string openDisplayMessage = "Open Door";
     public string closeDisplayMessage = "Close Door";
     public string lockedDisplayMessage = "Locked";
+    public string unlockDisplayMessage = "Unlock Door";
 
     //Sound variables
     public AudioSource openSound; // Sound to play when the door opens
     public AudioSource closeSound; // Sound to play when the door closes
     public AudioSource lockedSound; // Sound to play when the door closes
+    public AudioSource unlockSound; // Sound to play when the unlocks
 
     //Shaking door variables
     public float shakeAmount = 0.05f; // Amount of shake
@@ -54,12 +55,21 @@ public class Door : MonoBehaviour
     {
         openSound.Play();
         StartCoroutine(RotateDoor(openAngle));
+        interactable.displayMessage = closeDisplayMessage;
     }
 
     public void Close()
     {
         closeSound.Play();
         StartCoroutine(RotateDoor(closeAngle));
+        interactable.displayMessage = openDisplayMessage;
+    }
+
+    public void Unlock() //Use enumerator to play the sound when unlocking the door
+    {
+        unlockSound.Play();
+        interactable.displayMessage = openDisplayMessage;
+        isLocked = false;
     }
 
     public void InteractWithDoor()
@@ -69,14 +79,16 @@ public class Door : MonoBehaviour
             if (isOpen) 
             {
                 Close();
-                interactable.displayMessage = openDisplayMessage;
             }
             else
             {
                 Open();
-                interactable.displayMessage = closeDisplayMessage;
             }
             isOpen = !isOpen;
+        }
+        else if (isLocked && hasKey) //If door is locked and has key, then Unlock the door and open it
+        {
+            Unlock();
         }
         else
         {
@@ -121,6 +133,9 @@ public class Door : MonoBehaviour
         transform.position = originalPosition; // Reset position after shaking
     }
 
-    //Make a method to unlock door be checking the inventiry for the correct key.
+    public void SetUnlockDisplayMessage()
+    {
+        interactable.displayMessage = unlockDisplayMessage;
+    }
 }
 
