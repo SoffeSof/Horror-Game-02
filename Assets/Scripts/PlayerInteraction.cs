@@ -21,7 +21,7 @@ public class PlayerInteraction : MonoBehaviour
     public void CheckForInteractable()
     {
         RaycastHit hit;
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); //shots a ray straight from the center of camera
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); //shoots a ray straight from the center of camera
 
         if (Physics.Raycast(ray, out hit, playerReach))
         {
