@@ -14392,6 +14392,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312593785}
   m_CullTransparentMesh: 1
+--- !u!1 &1334004968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1334004970}
+  - component: {fileID: 1334004969}
+  m_Layer: 0
+  m_Name: Light Probe Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!220 &1334004969
+LightProbeGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334004968}
+  m_Enabled: 1
+  m_SourcePositions:
+  - {x: 2.0187168, y: 4.801401, z: 13.751575}
+  - {x: 2.0200787, y: 5.048498, z: -1.0079992}
+  - {x: 1.1909046, y: -1, z: 13.215476}
+  - {x: 1.910224, y: -1, z: -0.1788001}
+  - {x: -8.875393, y: 4.9328637, z: 13.9131}
+  - {x: -8.802588, y: 4.934714, z: -1}
+  - {x: -8.036907, y: -1, z: 13.76901}
+  - {x: -8.708271, y: -1, z: -0.26944876}
+  m_Dering: 1
+--- !u!4 &1334004970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334004968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.168, y: 1.36, z: -1.731}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338736055
 GameObject:
   m_ObjectHideFlags: 0
@@ -23973,6 +24023,18 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Strength
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 1.3451e-41
+      objectReference: {fileID: 0}
+    - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 6e-44
+      objectReference: {fileID: 0}
+    - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 9.5e-44
+      objectReference: {fileID: 0}
     - target: {fileID: 4672403375921881264, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
       propertyPath: _energy
       value: 100
@@ -25510,3 +25572,4 @@ SceneRoots:
   - {fileID: 1764417271}
   - {fileID: 1586676471}
   - {fileID: 1612726242}
+  - {fileID: 1334004970}
