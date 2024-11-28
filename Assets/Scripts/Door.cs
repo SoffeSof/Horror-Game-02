@@ -30,6 +30,7 @@ public class Door : MonoBehaviour
     public AudioSource closeSound; // Sound to play when the door closes
     public AudioSource lockedSound; // Sound to play when the door closes
     public AudioSource unlockSound; // Sound to play when the unlocks
+    public AudioSource knockSound; // Sound to play when the door is knocked
 
     //Shaking door variables
     public float shakeAmount = 0.05f; // Amount of shake
@@ -136,6 +137,60 @@ public class Door : MonoBehaviour
     public void SetUnlockDisplayMessage()
     {
         interactable.displayMessage = unlockDisplayMessage;
+    }
+
+    public void KnockDoor()
+    {
+        StartCoroutine(KnockDoorRoutine());
+    }
+
+    private IEnumerator KnockDoorRoutine()
+    {
+        float knockSpeed = 0.1f; // Speed of the knock movement
+        float knockDistance = 0.2f; // How far the door moves for each knock
+        int knockCount = 5; // Number of knocks
+
+        int waitTime = 2; // Time to wait before starting the knock
+        yield return new WaitForSeconds(waitTime);
+        Vector3 originalPosition = transform.position; // Save the original position
+        knockSound.volume = 0.5f; // Set the volume to the louder value (maximum, or you can choose any value)
+        knockSound.Play(); // Play the knock sound
+
+        for (int i = 0; i < knockCount; i++)
+        {
+            // Move the door slightly forward
+            transform.position = originalPosition + transform.forward * knockDistance;
+            //knockSound.Play(); // Play the knock sound
+            yield return new WaitForSeconds(knockSpeed);
+
+            // Move the door back to its original position
+            transform.position = originalPosition;
+            yield return new WaitForSeconds(knockSpeed);
+        }
+
+        // Ensure the door ends in its original position
+        transform.position = originalPosition;
+
+        yield return new WaitForSeconds(waitTime);
+        // Make the knock sound louder for the second round
+        knockSound.volume = 1.0f; // Set the volume to the louder value (maximum, or you can choose any value)
+        knockSound.Play(); // Play the knock sound
+        knockDistance = 0.4f; // How far the door moves for each knock
+
+        for (int i = 0; i < knockCount; i++)
+        {
+            // Move the door slightly forward
+            transform.position = originalPosition + transform.forward * knockDistance;
+            //knockSound.Play(); // Play the knock sound
+            yield return new WaitForSeconds(knockSpeed);
+
+            // Move the door back to its original position
+            transform.position = originalPosition;
+            yield return new WaitForSeconds(knockSpeed);
+        }
+         // Ensure the door ends in its original position
+        transform.position = originalPosition;
+        knockSound.volume = 0.5f; // Set the volume to the louder value (maximum, or you can choose any value)
     }
 }
 
