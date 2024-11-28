@@ -32,7 +32,7 @@ public class Door : MonoBehaviour
 
     //Shaking door variables
     public float shakeAmount = 0.05f; // Amount of shake
-    public float shakeDuration = 0.5f; // Duration of shake
+    public float shakeDuration = 1f; // Duration of shake
 
     private Vector3 originalPosition;
 
@@ -120,5 +120,7 @@ public class Door : MonoBehaviour
 
         transform.position = originalPosition; // Reset position after shaking
     }
+
+    //Make a method to unlock door be checking the inventiry for the correct key.
 }
 

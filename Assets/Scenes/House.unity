@@ -479,7 +479,7 @@ MonoBehaviour:
   isOpen: 0
   isLocked: 1
   openSpeed: 0.5
-  closeSpeed: 1
+  closeSpeed: 0.5
   openAngle: 90
   closeAngle: 0
   openDisplayMessage: Open Door
@@ -489,7 +489,7 @@ MonoBehaviour:
   closeSound: {fileID: 1928545581}
   lockedSound: {fileID: 431195628}
   shakeAmount: 0.05
-  shakeDuration: 0.5
+  shakeDuration: 1
 --- !u!1001 &50471495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24158,19 +24158,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: -11
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: -1
+      value: 7.72e-43
       objectReference: {fileID: 0}
     - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 108003487599132438, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4672403375921881264, guid: 0ddea81a21def2441b61569e0a44ca14, type: 3}
       propertyPath: _energy
