@@ -13,6 +13,13 @@ public class NoteInventoryManager : MonoBehaviour
     public Transform notesParent;
     private string defaultText = "No note selected";
 
+    [SerializeField] string noteConent1;
+    [SerializeField] string noteConent2;
+    [SerializeField] string noteConent3;
+    [SerializeField] string noteConent4;
+    [SerializeField] string noteConent5;
+    [SerializeField] string noteConent6;
+
     [SerializeField] private float _notesCollected = 100f; // Private backing field
 
     public float NotesCollected //Single source of truth principle
@@ -32,12 +39,12 @@ public class NoteInventoryManager : MonoBehaviour
 
     private Dictionary<int, string> noteContents = new Dictionary<int, string>() //Using 0-based index
 {
-    { 0, "This is the content for Note 1" },
-    { 1, "This is the content for Note 2" },
-    { 2, "This is the content for Note 3" },
-    { 3, "This is the content for Note 4" },
-    { 4, "This is the content for Note 5" },
-    { 5, "This is the content for Note 6" }
+    { 0, "Daniel, If you are reading this, you’ve done what I begged you to—erased your memory. You couldn’t bear the weight of your guilt, and neither could I. The curse… it began with what you unleashed. I can’t explain everything yet—it’s too dangerous to remember all at once. But you must understand: this house, this curse, it’s your doing." },
+    { 1, "Daniel, You must keep moving. Something is watching you. It’s not alive, not in the way we understand. It is bound to you, feeding on your fear, your regret. You summoned it the night you made the pact. Do you remember the ritual? No, of course you don’t. I made sure of that. But it remembers. It will not stop until it has you." },
+    { 2, "Daniel, Her name was Elise. You loved her, more than life itself. But life wasn’t enough, was it? You thought you could bring her back. You thought the ritual would save her. Instead, you summoned… something else. Something older, something vengeful. Elise is gone, Daniel. You must accept that. What you brought into this world, though—that remains." },
+    { 3, "Daniel, The artifact is your only hope. You hid it somewhere in this house, though even I can’t recall where. You sealed it away because you were afraid of what would happen if you used it. But without it, you cannot break the curse. It’s a terrible thing, Daniel. It holds the truth you tried so desperately to escape. And the truth… it will destroy you." },
+    { 4, "Daniel, You erased your memory to escape the guilt, but it festers in the dark corners of this house. The thing that follows you is drawn to it. Every choice you made, every life you sacrificed in your desperate attempt to save Elise—it remembers. You’ve hidden from the truth for long enough. To survive, you must face what you’ve done." },
+    { 5, "Daniel, This is the final step. The artifact holds the truth—the ritual, the blood, the pact you made with the shadows. When you see it, you will understand why I begged you to forget. But it is not too late. You must escape the house and destroy the artifact before it finds you. The nightmare is closing in, Daniel, and if you fail, there will be no way out." }
 };
 
     void Start()
