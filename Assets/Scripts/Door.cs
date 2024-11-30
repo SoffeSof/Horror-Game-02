@@ -18,6 +18,7 @@ public class Door : MonoBehaviour
     public float closeSpeed = 1.0f;
     public float openAngle = 90.0f;
     public float closeAngle = 0.0f;
+    public float xAngle = 0.0f;
 
     //Display messages
     public string openDisplayMessage = "Open Door";
@@ -102,17 +103,18 @@ public class Door : MonoBehaviour
     {
         isAnimating = true;
         float currentAngle = transform.localRotation.eulerAngles.y;
+    
         float time = 0f;
 
         while (Mathf.Abs(currentAngle - targetAngle) > 0.1f)
         {
             time += Time.deltaTime * openSpeed;
             currentAngle = Mathf.Lerp(currentAngle, targetAngle, time);
-            transform.localRotation = Quaternion.Euler(0f, currentAngle, 0f);
+            transform.localRotation = Quaternion.Euler(xAngle, currentAngle, 0f);
             yield return null;
         }
 
-        transform.localRotation = Quaternion.Euler(0f, targetAngle, 0f); // Snap to final angle
+        transform.localRotation = Quaternion.Euler(xAngle, targetAngle, 0f); // Snap to final angle
         isAnimating = false;
     }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FlickeringLight : MonoBehaviour
 {
-    private Light lightSource;
+    public Light lightSource;
+    public Light otherLight;
     public float minTime;
     public float maxTime;
     private float timer;
@@ -29,6 +30,10 @@ public class FlickeringLight : MonoBehaviour
         else if (timer <= 0)
         {
             lightSource.enabled = !lightSource.enabled;
+            if (otherLight != null)
+            {   
+                otherLight.enabled = !otherLight.enabled;
+            }
             timer = Random.Range(minTime, maxTime);
         }
     }
