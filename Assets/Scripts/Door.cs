@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
     public bool isLocked = false;
     private bool isAnimating = false;
     public bool hasKey = false;
+    public bool cantBeOpened = false;
 
     //Door Movement Variables
     public float openSpeed = 0.5f;
@@ -76,6 +77,7 @@ public class Door : MonoBehaviour
 
     public void InteractWithDoor()
     {
+        if (cantBeOpened) return;
         if(!isLocked || isAnimating) //If door is not locked, then open or close the door
         {
             if (isOpen) 
@@ -193,6 +195,19 @@ public class Door : MonoBehaviour
          // Ensure the door ends in its original position
         transform.position = originalPosition;
         knockSound.volume = 0.5f; // Set the volume to the louder value (maximum, or you can choose any value)
+    }
+
+    public void LockDoor()
+    {
+        isLocked = true;
+        hasKey = false;
+        cantBeOpened = true;
+        if (isOpen)
+        {
+            Close();
+            isOpen = false;
+            interactable.displayMessage = "The door cannot be opened";
+        }
     }
 }
 

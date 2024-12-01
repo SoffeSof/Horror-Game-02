@@ -21,4 +21,10 @@ public class TriggerCollider : MonoBehaviour
         door.KnockDoor();
         Destroy(gameObject);
     }
+
+    public void LockDoor()
+    {
+        door.LockDoor();
+        Destroy(gameObject);
+    }
 }
