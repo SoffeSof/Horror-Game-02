@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
     private bool isAnimating = false;
     public bool hasKey = false;
     public bool cantBeOpened = false;
+    public bool shakeDoorOnly = false;
 
     //Door Movement Variables
     public float openSpeed = 0.5f;
@@ -26,6 +27,7 @@ public class Door : MonoBehaviour
     public string closeDisplayMessage = "Close Door";
     public string lockedDisplayMessage = "Locked";
     public string unlockDisplayMessage = "Unlock Door";
+    public string cantBeOpenedDisplayMessage = "The door cannot be opened";
 
     //Sound variables
     public AudioSource openSound; // Sound to play when the door opens
@@ -93,6 +95,10 @@ public class Door : MonoBehaviour
         else if (isLocked && hasKey) //If door is locked and has key, then Unlock the door and open it
         {
             Unlock();
+        }
+        else if (shakeDoorOnly) //If door is locked, has no key and has been forced shut, then shake the door
+        {
+            StartCoroutine(ShakeDoor());
         }
         else
         {
@@ -201,13 +207,29 @@ public class Door : MonoBehaviour
     {
         isLocked = true;
         hasKey = false;
-        cantBeOpened = true;
         if (isOpen)
         {
             Close();
-            isOpen = false;
-            interactable.displayMessage = "The door cannot be opened";
         }
+        interactable.displayMessage = cantBeOpenedDisplayMessage;
+        shakeDoorOnly = true;
+    }
+
+    public void BlockDoor()
+    {
+        cantBeOpened = true;
+        interactable.displayMessage = cantBeOpenedDisplayMessage;
+        isLocked = true;
+        hasKey = false;
+
+    }
+
+    public void UnblockDoor()
+    {
+        cantBeOpened = false;
+        interactable.displayMessage = openDisplayMessage;
+        isLocked = false;
+        hasKey = true;
     }
 }
 

@@ -12,6 +12,8 @@ public class KeyInventoryManager : MonoBehaviour
     public TMP_Text keyContent;
     public Transform keysParent;
 
+    public int keyCount = 0;
+
     //Colors
     public Color unlockedColor;
 
@@ -63,6 +65,7 @@ public class KeyInventoryManager : MonoBehaviour
         {
             keys[keyNumber].text = keyName; // Update the text component
             keys[keyNumber].color = unlockedColor; // Change the color of the text
+            keyCount++; // Increment the key count
 
             // Enable the corresponding button
             if (keyNumber >= 0 && keyNumber < keyButtons.Length)

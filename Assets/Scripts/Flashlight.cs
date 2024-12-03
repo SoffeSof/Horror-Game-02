@@ -74,8 +74,9 @@ public class Flashlight : MonoBehaviour
 
     private void LightFlicker()
     {
+
         // Only start flickering if the flashlight is on and energy is below 10
-        if (isOn && Energy <= 30f)
+        if (isOn && Energy <= 10f)
         {
             Timer -= Time.deltaTime; // Countdown only if flashlight is on
             if (Timer <= 0)
@@ -88,7 +89,7 @@ public class Flashlight : MonoBehaviour
                 flickerSound.Play();
             }
         }
-        if (Energy > 30f) // Stop flickering if flashlight is above 30
+        if (Energy > 10f) // Stop flickering if flashlight is above 30
         {
             flickerSound.Stop();
         }

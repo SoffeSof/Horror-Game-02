@@ -11,9 +11,21 @@ public class Cabinet : MonoBehaviour
     private bool isMovingForward = true; // Direction of the movement
     private bool hasBeenPushed = false; // Prevents multiple pushes
 
+    private Interactable interactable;
+    private Outline outline;
+
+    void Start()
+    {
+        interactable = GetComponent<Interactable>();
+        outline = GetComponent<Outline>();
+        interactable.displayMessage = "Push Cabinet";
+    }
+
     public void PushCabinet()
     {
         if (!isMovingForward || hasBeenPushed == true) return; // Prevent multiple pushes at the same time
+        outline.enabled = false;
+        interactable.enabled = false;
         StartCoroutine(MoveCabinet());
         hasBeenPushed = true;
     }

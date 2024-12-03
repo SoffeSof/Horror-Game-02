@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public MouseLook mouseLook;
 
     private int selectedSlotIndex = -1;
+    private string cantBeUsedString = "Item cant be used here";
 
     private void Update()
     {
@@ -156,7 +157,19 @@ public class InventoryManager : MonoBehaviour
     private void UseSelectedItem()
     {
         InventorySlot slot = inventorySlots[selectedSlotIndex];
+        // Check if the slot is empty
+        if (slot == null || slot.GetComponentInChildren<InventoryItem>() == null)
+        {
+            Debug.LogWarning("No item in the selected slot to use.");
+            return; // Exit the method early if the slot is empty
+        }
+
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot.item.cantBeUsed == true)
+        {
+            HUDController.Instance.EnableCantBeUsedInteractionText(cantBeUsedString);
+            return;
+        }
         if (itemInSlot != null)
         {
             itemInSlot.count--;
@@ -176,4 +189,20 @@ public class InventoryManager : MonoBehaviour
                 }
         }
     }
+
+    public void RemoveItem(Item itemToRemove)
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            if (itemInSlot != null && itemInSlot.item == itemToRemove)
+            {
+                // Destroy the item in the slot
+                Destroy(itemInSlot.gameObject);
+            }
+        }
+    }
+    
 }

@@ -7,7 +7,7 @@ public class PickUpItems : MonoBehaviour
     public InventoryManager inventoryManager;
     public Item itemType;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         inventoryManager = FindObjectOfType<InventoryManager>();	
     }

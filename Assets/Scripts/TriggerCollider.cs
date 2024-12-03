@@ -13,18 +13,7 @@ public class TriggerCollider : MonoBehaviour
         if (other.tag == "Player")
         {
             interactEvent.Invoke(); //Calls the event set in the inspector
+            Destroy(gameObject);
         }
-    }
-
-    public void KnockDoor()
-    {
-        door.KnockDoor();
-        Destroy(gameObject);
-    }
-
-    public void LockDoor()
-    {
-        door.LockDoor();
-        Destroy(gameObject);
     }
 }

@@ -66,17 +66,16 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 gameObject.AddComponent<Medkit>();
                 Debug.Log("Medkit item detected!");
                 break;
-            case Item.itemType.Key:
-                // Add logic for Key if required
-                Debug.Log("Key item detected!");
-                break;
-            case Item.itemType.Note:
-                // Add logic for Note if required
-                Debug.Log("Note item detected!");
-                break;
             case Item.itemType.Pills:
                 gameObject.AddComponent<Pills>();
                 Debug.Log("Pills item detected!");
+                break;
+            case Item.itemType.Lever:
+                gameObject.AddComponent<Lever>();
+                Debug.Log("Lever item detected!");
+                break;
+            case Item.itemType.MagicBall:
+                Debug.Log("MagicBall item detected!");
                 break;
             default:
                 Debug.LogWarning("Unhandled item type: " + item.type);

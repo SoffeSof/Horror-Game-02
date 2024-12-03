@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
 
     // Movement Variables
-    private float movementSpeed = 9f;
-    private float sprintSpeed = 16f;
+    private float movementSpeed = 5f;
+    private float sprintSpeed = 9f;
     private float currentSpeed;
 
     // Gravity and Jump Variables

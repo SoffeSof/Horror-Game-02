@@ -11,6 +11,7 @@ public class Item : ScriptableObject
     public itemType type;
     public bool isStackable = true;
     public int maxStackSize = 1;
+    public bool cantBeUsed = false;
     
 
     public enum itemType
@@ -19,7 +20,9 @@ public class Item : ScriptableObject
         Key,
         Note,
         Medkit,
-        Pills
+        Pills,
+        Lever,
+        MagicBall
     }
 
 }

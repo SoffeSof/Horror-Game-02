@@ -8,6 +8,6 @@ public class Medkit : PickUpItems
 
     public override void UseItem()
     {
-        HUDController.Instance.Health += HealthValue;
+        HUDController.Instance.Sanity += HealthValue;
     }
 }

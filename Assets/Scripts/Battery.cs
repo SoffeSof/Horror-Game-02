@@ -7,7 +7,7 @@ public class Battery : PickUpItems
     [SerializeField] private float energyValue = 20f;
     public Flashlight flashlight;
 
-    public void Awake()
+    protected override void Awake()
     {
         flashlight = FindObjectOfType<Flashlight>();
         inventoryManager = FindObjectOfType<InventoryManager>();
