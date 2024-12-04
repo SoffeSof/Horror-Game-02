@@ -10,6 +10,14 @@ public class Flashlight : MonoBehaviour
     public AudioSource flickerSound;
     public GameObject flashlightObject;
 
+    //Monster detection variables
+    private float flashlightRange = 30f; // Range of the flashlight's effect
+    public LayerMask monsterLayer; // Set to only detect monsters
+    public float flashlightRadius = 1f;  // The radius of the sphere cast
+    private float detectionTimer = 0f; // Timer to track how long the monster is in the light
+    private float requiredDetectionTime = 3f; // Time in seconds for the monster to be in the light to respawn
+
+
     [SerializeField] private float _energy = 100f; // Private backing field
 
     public float Energy
@@ -38,7 +46,16 @@ public class Flashlight : MonoBehaviour
     {
         DrainEnergy();
         LightFlicker();
+        ToggleFlashlight();
+        if (isOn)
+        {
+            Debug.Log("Detecting Monster");
+            DetectMonster();
+        }
+    }
 
+    private void ToggleFlashlight()
+    {
         if (Input.GetKeyDown(KeyCode.F) && Energy > 0) // Toggle flashlight, restrain to only be able to turn on when energy is above 0
         {
             if (isOn == true)
@@ -46,14 +63,14 @@ public class Flashlight : MonoBehaviour
                 isOn = false;
                 flashlight.enabled = false;
                 flickerSound.Stop();
-                clickSound.Play();
             }
             else
             {
                 isOn = true;
                 flashlight.enabled = true;
-                clickSound.Play();
+
             }
+            clickSound.Play();
         }
     }
 
@@ -92,6 +109,41 @@ public class Flashlight : MonoBehaviour
         if (Energy > 10f) // Stop flickering if flashlight is above 30
         {
             flickerSound.Stop();
+        }
+    }
+
+    private void DetectMonster()
+    {
+        // Get the camera's position and direction
+        Vector3 cameraPosition = Camera.main.transform.position;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Debug.Log("1");
+        // Perform the sphere cast
+        if (Physics.SphereCast(cameraPosition, flashlightRadius, cameraForward, out RaycastHit hit, flashlightRange, monsterLayer))
+        {
+            Debug.Log("2");
+            // Check if the sphere cast hits an object tagged as "Monster"
+            if (hit.collider.CompareTag("Monster"))
+            {
+                Debug.Log("Within Range");
+                // If the monster is detected, start counting time
+                detectionTimer += Time.deltaTime;
+
+                // If the detection time reaches the required time, respawn the monster
+                if (detectionTimer >= requiredDetectionTime)
+                {
+                    // Call the monster's respawn function
+                    hit.collider.GetComponent<MonsterAI>().RespawnMonster();
+                    
+                    // Reset the detection timer after respawn
+                    detectionTimer = 0f;
+                }
+            }
+        }
+        else
+        {
+            // Reset the timer if the monster is no longer in the flashlight's range
+            detectionTimer = 0f;
         }
     }
        

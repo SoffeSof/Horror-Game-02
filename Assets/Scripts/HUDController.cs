@@ -14,6 +14,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private KeyInventoryManager keyInventoryManager;
     [SerializeField] private Flashlight flashlight;
     [SerializeField] private Barrier barrier;
+    [SerializeField] private PlayerMovement playerMovement;
 
     public bool allNotesCollected = false;
 
@@ -24,6 +25,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private TMP_Text notesText;
     [SerializeField] private TMP_Text batteryText;
     [SerializeField] private GameObject gameDonePanel;
+    [SerializeField] private TMP_Text sprintText;
 
      // Audio sanity variables
     [SerializeField] private AudioSource heartbeatAudioSource;
@@ -65,12 +67,6 @@ public class HUDController : MonoBehaviour
 
     void Start()
     {
-        inventoryManager = FindObjectOfType<InventoryManager>();
-        noteInventoryManager = FindObjectOfType<NoteInventoryManager>();
-        keyInventoryManager = FindObjectOfType<KeyInventoryManager>();
-        flashlight = FindObjectOfType<Flashlight>();
-        barrier = GameObject.Find("Barrier").GetComponent<Barrier>();
-
         // Healtbar 
         //Sanity = 10f; // Set the health to the initial value
         fill.color = gradient.Evaluate(slider.normalizedValue);
@@ -99,6 +95,21 @@ public class HUDController : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        noteInventoryManager = FindObjectOfType<NoteInventoryManager>();
+        keyInventoryManager = FindObjectOfType<KeyInventoryManager>();
+        flashlight = FindObjectOfType<Flashlight>();
+        barrier = GameObject.Find("Barrier").GetComponent<Barrier>();
+    }
+
+    public void GetReferences()
+    {
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        noteInventoryManager = FindObjectOfType<NoteInventoryManager>();
+        keyInventoryManager = FindObjectOfType<KeyInventoryManager>();
+        flashlight = FindObjectOfType<Flashlight>();
     }
 
     private void UpdateAudioEffects()
@@ -202,6 +213,11 @@ public class HUDController : MonoBehaviour
     public void UpdateBatteryText()
     {
         batteryText.text = $"Battery: {flashlight.Energy:F0}%"; // F0 formats it as a whole number (no decimal places)
+    }
+
+    public void UpdateSprintText()
+    {
+        sprintText.text = $"Sprint Energy: {playerMovement.SprintEnergy:F0}%"; // F0 formats it as a whole number (no decimal places)
     }
 
     private void DrainHealth()
