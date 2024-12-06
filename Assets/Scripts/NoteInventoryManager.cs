@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class NoteInventoryManager : MonoBehaviour
 {
-    // An array of TextMeshProUGUI components for displaying the notes
-    public TMP_Text[] notes;
-    public Button[] noteButtons;
-    public TMP_Text noteContent;
-    public Transform notesParent;
-    private string defaultText = "No note selected";
+    public TMP_Text[] notes; // An array of TextMeshProUGUI components for displaying the notes
+    public Button[] noteButtons; // Buttons associated with the notes
+    public TMP_Text noteContent; // Text field for displaying the content of the selected note
+    public Transform notesParent; // The parent that holds the notes and buttons
+    private string defaultText = "No note selected"; // Default text when no note is selected
 
+    // Serialized fields to define the content of the notes
     [SerializeField] string noteConent1;
     [SerializeField] string noteConent2;
     [SerializeField] string noteConent3;
@@ -20,24 +20,23 @@ public class NoteInventoryManager : MonoBehaviour
     [SerializeField] string noteConent5;
     [SerializeField] string noteConent6;
 
-    [SerializeField] private float _notesCollected = 100f; // Private backing field
+    [SerializeField] private float _notesCollected = 0f; // Private backing field for the notes collected
 
-    public float NotesCollected //Single source of truth principle
+    public float NotesCollected // Public property for accessing and modifying notes collected. Single source of truth principle
     {
         get { return _notesCollected; }
         set {
-                _notesCollected = Mathf.Clamp(value, 0f, 6f); 
-                HUDController.Instance.UpdateNotesCollected();
+                _notesCollected = Mathf.Clamp(value, 0f, 6f); // Ensure the notes collected stays between 0 and 6
+                HUDController.Instance.UpdateNotesCollected(); // Update the HUD with the new value
             }
     }
 
     //Colors
-    public Color unlockedColor;
+    public Color unlockedColor; // Color for the unlocked notes txt.
 
-     // Variable to track the currently selected note
-    private int currentlySelectedNote = -1;
+    private int currentlySelectedNote = -1;  //Variable to track the currently selected note (initialized to -1 for no selection)
 
-    private Dictionary<int, string> noteContents = new Dictionary<int, string>() //Using 0-based index
+    private Dictionary<int, string> noteContents = new Dictionary<int, string>() //Dictionary for storing the content of each note by note number (0-indexed)
 {
     { 0, "Daniel, If you are reading this, you’ve done what I begged you to—erased your memory. You couldn’t bear the weight of your guilt, and neither could I. The curse… it began with what you unleashed. I can’t explain everything yet—it’s too dangerous to remember all at once. But you must understand: this house, this curse, it’s your doing." },
     { 1, "Daniel, You must keep moving. Something is watching you. It’s not alive, not in the way we understand. It is bound to you, feeding on your fear, your regret. You summoned it the night you made the pact. Do you remember the ritual? No, of course you don’t. I made sure of that. But it remembers. It will not stop until it has you. Look for the green light" },
@@ -49,88 +48,77 @@ public class NoteInventoryManager : MonoBehaviour
 
     void Start()
     {
-        NotesCollected = 0; // Set the notes collected to the initial value
-        // Get all TMP_Text components only under the specific parent
-        notes = notesParent.GetComponentsInChildren<TMP_Text>();
-        noteButtons = notesParent.GetComponentsInChildren<Button>();
+        NotesCollected = 0; // Initialize notes collected to 0
+        notes = notesParent.GetComponentsInChildren<TMP_Text>(); // Get all TMP_Text components under the notes parent
+        noteButtons = notesParent.GetComponentsInChildren<Button>(); // Get all buttons under the notes parent
 
-        // Set all note texts to "???"
-        foreach (TMP_Text note in notes)
+        foreach (TMP_Text note in notes) // FOreach note text component in the array
         {
             if (note != null) // Ensure the note is not null to avoid errors
             {
-                note.text = "???";
+                note.text = "???"; // Set the default text for locked notes
             }
         }
 
-        foreach (Button button in noteButtons) //Get all buttons under the parent
+        foreach (Button button in noteButtons) // For each button in the array
         {
             if (button != null) // Ensure the note is not null to avoid errors
             {
-                button.interactable = false; // Disable all buttons initially
+                button.interactable = false; // Buttons are not interactable until notes are unlocked
             }
         }
     }
 
-    // Method to add a note based on its number
-    public void AddNoteToInventory(string noteName, int noteNumber)
+    public void AddNoteToInventory(string noteName, int noteNumber) // Method to add a note based on its number
     {
-        // Ensure the noteNumber is within the bounds of the array
-        if (noteNumber >= 0 && noteNumber < notes.Length)
+        if (noteNumber >= 0 && noteNumber < notes.Length) // Ensure the noteNumber is within the bounds of the array
         {
             notes[noteNumber].text = noteName; // Update the text component
-            notes[noteNumber].color = unlockedColor; // Change the color of the text
+            notes[noteNumber].color = unlockedColor; // Change the color of the text on the buttons.
 
-            // Enable the corresponding button
-            if (noteNumber >= 0 && noteNumber < noteButtons.Length)
+            if (noteNumber >= 0 && noteNumber < noteButtons.Length) //If the note number is within the bounds of the button array
             {
                 noteButtons[noteNumber].interactable = true; // Enable the button for the note
             }
 
-            NotesCollected++;
+            NotesCollected++; // Increment the number of notes collected
         }
         else
         {
-            Debug.LogWarning("Invalid note number"); 
+            Debug.LogWarning("Invalid note number"); // Log a warning if the note number is invalid
         }
     }
 
-    // New method to set the note content based on noteNumber
-    public void SelectNote(int noteNumber)
+    public void SelectNote(int noteNumber)  // Method to select a note and display its content
     {
-        // If the same note is clicked again, unselect it
-        if (currentlySelectedNote == noteNumber)
+        if (currentlySelectedNote == noteNumber) // If the selected note is the same as the current
         {
-            DeselectNote();
-            return;
+            DeselectNote(); //deselct the note
+            return; // Exit the method
         }
 
-         // If a different note is currently selected, reset its color
-        if (currentlySelectedNote != -1 && currentlySelectedNote < notes.Length)
+        if (currentlySelectedNote != -1 && currentlySelectedNote < notes.Length) // If a different note is currently selected and it is within the bounds of the array
         {
-            notes[currentlySelectedNote].fontStyle = FontStyles.Normal;
+            notes[currentlySelectedNote].fontStyle = FontStyles.Normal; // Restore the normal font style
         }
-        
-        // Update the selection
-        currentlySelectedNote = noteNumber;
 
-        // Check if the note number exists in the content dictionary
-        if (noteContents.ContainsKey(currentlySelectedNote))
+        currentlySelectedNote = noteNumber; // Update the currently selected note
+
+        if (noteContents.ContainsKey(currentlySelectedNote)) // Check if the selected note exists in the dictionary
         {
-            // Set the note content (this could be a UI text field, etc.)
-            noteContent.text = noteContents[currentlySelectedNote];
+            noteContent.text = noteContents[currentlySelectedNote]; // Display the content of the selected note
             notes[currentlySelectedNote].fontStyle = FontStyles.Bold; // Make text bold for selected note
         }
         else
         {
-            Debug.LogWarning("Note number not found in content dictionary.");
+            Debug.LogWarning("Note number not found in content dictionary."); // Log a warning if the note number is not found
         }
     }
 
-    public void DeselectNote()
+    public void DeselectNote() // Method to deselect the currently selected note
     {
-        notes[currentlySelectedNote].fontStyle = FontStyles.Normal;
-        noteContent.text = defaultText; // Clear the content display
+        notes[currentlySelectedNote].fontStyle = FontStyles.Normal; // Reset font style to normal
+        noteContent.text = defaultText; // Clear the note content display
         currentlySelectedNote = -1; // No note is selected
     }
 }

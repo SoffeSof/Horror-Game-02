@@ -5,15 +5,19 @@ using UnityEngine.Events;
 
 public class TriggerCollider : MonoBehaviour
 {
-    public Door door;
-    public UnityEvent interactEvent;
+    public Door door; // Reference to the Door object that will be interacted with
+    public UnityEvent interactEvent;  // UnityEvent that can be set in the Inspector to invoke when the trigger occurs
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other) // This method is called when another collider enters the trigger collider
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player") // Check if the object that triggered the collider is tagged as "Player"
         {
             interactEvent.Invoke(); //Calls the event set in the inspector
-            Destroy(gameObject);
+            Destroy(gameObject);  // Destroys the object this script is attached to
         }
+    }
+    public void GameDone() //Method called on the ending door in the forest level
+    {
+        HUDController.Instance.GameDone(); // Calls the GameDone method in the HUDController
     }
 }

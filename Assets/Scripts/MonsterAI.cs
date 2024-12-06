@@ -5,22 +5,21 @@ using UnityEngine;
 public class MonsterAI : MonoBehaviour
 {
     public Transform player; // Drag the player object into this field in the Inspector
-    private UnityEngine.AI.NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent; // The NavMeshAgent component used for pathfinding
     public float respawnRadius = 10f; // Radius within which the monster respawns
-
-    // Add a respawn delay
-    public float respawnDelay = 1f; // Delay before the monster respawns
+    private float monsterSanityDrainRate = 12f; // Sanity drain rate when the monster is close to the player
+    private float normalSanityDrainRate = 0.5f; // Default sanity drain rate when the monster is not close to the player
 
     void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player").transform; // Find the player object by tag
-        RespawnMonster();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>(); // Get the NavMeshAgent component attached to the monster
+        player = GameObject.FindGameObjectWithTag("Player").transform; // Find the player object by its tag
+        RespawnMonster(); // Respawn the monster to a valid position
     }
 
     void Update()
     {
-        if (player != null)
+        if (player != null) // If the player exists, set the monster's destination to the player's position
         {
             agent.SetDestination(player.position); // Continuously chase the player
         }
@@ -29,12 +28,11 @@ public class MonsterAI : MonoBehaviour
     public void RespawnMonster()
     {
         int maxRetries = 10; // Max number of attempts to find a valid spot
-        int attempts = 0;
+        int attempts = 0; // Number of attempts made so far
 
-        // Sample the NavMesh to find a valid walkable position
-        UnityEngine.AI.NavMeshHit hit;
-        float min = 30f;  // Minimum X value
-        float max = 50f;  // Maximum X value
+        UnityEngine.AI.NavMeshHit hit; // Sample the NavMesh to find a valid walkable position
+        float min = 30f;  // Minimum X value for respawn area
+        float max = 50f;  // Maximum X value for respawn area
 
         do
         {
@@ -45,23 +43,34 @@ public class MonsterAI : MonoBehaviour
             // Keep Y the same as the original transform position, or modify if needed
             float randomY = transform.position.y; 
 
-            // Generate random direction within the respawn radius
-            Vector3 randomDirection = new Vector3(randomX, randomY, randomZ);
-            randomDirection += transform.position;
+            Vector3 randomDirection = new Vector3(randomX, randomY, randomZ);  // Create a random direction for respawn position within the defined area
+            randomDirection += transform.position; // Offset it by the current monster position
 
-            // Try to find a walkable position
-            attempts++;
-
-
-            if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, respawnRadius, UnityEngine.AI.NavMesh.AllAreas))
+            attempts++; // Increment the retry counter
+            if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, respawnRadius, UnityEngine.AI.NavMesh.AllAreas))  // If a valid position is found, update the monster's position and return
             {
-                transform.position = hit.position;
+                transform.position = hit.position; // Set the monster's position to the valid position found
                 return; // Exit once a valid position is found
             }
 
-            } while (attempts < maxRetries); // Retry if not found, until the max attempts
+            } while (attempts < maxRetries); // Retry if not found, until the max attempts are reached
+        Debug.LogWarning("Could not find a valid walkable position after " + maxRetries + " attempts."); // Log a warning if no valid position was found after maxRetries
+    }
 
-        // If we reach the retry limit without success, log a warning
-        Debug.LogWarning("Could not find a valid walkable position after " + maxRetries + " attempts.");
+    private void OnTriggerEnter(Collider other) // Trigger when the monster collides with another collider
+    {
+        if (other.CompareTag("Player")) // Check if the collider belongs to the player
+        {
+            Debug.Log("Monster collided with player"); 
+            HUDController.Instance.sanityDrainRate = monsterSanityDrainRate; // Start draining faster sanity when the monster is near the player
+        }
+    }
+
+    private void OnTriggerExit(Collider other) // Trigger when the monster exits the player's collider
+    {
+        if (other.CompareTag("Player")) // Check if the collider belongs to the player
+        {
+            HUDController.Instance.sanityDrainRate = normalSanityDrainRate;// Stop draining sanity faster when the monster exits the player's collider
+        }
     }
 }

@@ -9,25 +9,25 @@ public class Cabinet : MonoBehaviour
     private float endPosition = -14.59f; // Ending Z position of the cabinet
 
     private bool isMovingForward = true; // Direction of the movement
-    private bool hasBeenPushed = false; // Prevents multiple pushes
+    private bool hasBeenPushed = false; //Bool to prevent multiple pushes
 
-    private Interactable interactable;
-    private Outline outline;
+    private Interactable interactable; // Reference to the interactable component
+    private Outline outline; // Reference to the outline component
 
     void Start()
     {
-        interactable = GetComponent<Interactable>();
-        outline = GetComponent<Outline>();
-        interactable.displayMessage = "Push Cabinet";
+        interactable = GetComponent<Interactable>(); // Get the interactable component
+        outline = GetComponent<Outline>(); // Get the outline component
+        interactable.displayMessage = "Push Cabinet"; // Set the displayeMessage in the interactable script to "Push Cabinet"
     }
 
-    public void PushCabinet()
+    public void PushCabinet() //Method called when interacting (pressing E) the the cabinet, called in the iteractEvent in the Interactable script set in the inspector
     {
         if (!isMovingForward || hasBeenPushed == true) return; // Prevent multiple pushes at the same time
-        outline.enabled = false;
-        interactable.enabled = false;
-        StartCoroutine(MoveCabinet());
-        hasBeenPushed = true;
+        outline.enabled = false; // Disable the outline when the cabinet is pushed
+        interactable.enabled = false; // Disable the interactable component to stop further interactions
+        StartCoroutine(MoveCabinet()); // Start the cabinet movement coroutine
+        hasBeenPushed = true; // Mark the cabinet as already pushed
     }
 
     private IEnumerator MoveCabinet()
@@ -38,16 +38,14 @@ public class Cabinet : MonoBehaviour
 
         float time = 0f; // Tracks interpolation progress
 
-        while (Mathf.Abs(transform.position.z - endPosition) > 0.1f)
+        while (Mathf.Abs(transform.position.z - endPosition) > 0.1f) // While the cabinet hasn't reached the target position
         {
-            time += Time.deltaTime * pushSpeed;
-            transform.position = Vector3.Lerp(startPosition, targetPosition, time); // Smoothly move towards the target
-            yield return null;
+            time += Time.deltaTime * pushSpeed; // Increment the time based on frame time and push speed
+            transform.position = Vector3.Lerp(startPosition, targetPosition, time); // Smoothly move the cabinet to the target position
+            yield return null; // Wait until the next frame to continue
         }
-
-        // Snap to the final position for precision
-        transform.position = targetPosition;
-        isMovingForward = false; // Mark as not moving
+        transform.position = targetPosition; // Snap to the final position for precision
+        isMovingForward = false; //Mark as not moving
     }
 }
 
