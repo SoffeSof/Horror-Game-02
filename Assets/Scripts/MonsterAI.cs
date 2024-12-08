@@ -8,7 +8,7 @@ public class MonsterAI : MonoBehaviour
     private UnityEngine.AI.NavMeshAgent agent; // The NavMeshAgent component used for pathfinding
     public float respawnRadius = 30f; // Radius within which the monster respawns
     private float monsterSanityDrainRate = 12f; // Sanity drain rate when the monster is close to the player
-    private float normalSanityDrainRate = 0.5f; // Default sanity drain rate when the monster is not close to the player
+    private float normalSanityDrainRate = 0.3f; // Default sanity drain rate when the monster is not close to the player
 
     void Start()
     {
