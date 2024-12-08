@@ -43,7 +43,7 @@ public class HUDController : MonoBehaviour
     public Slider slider;  // UI slider representing the sanity level
     public Gradient gradient;  // Gradient for health bar color changes
     public Image fill;  // Image that fills the health bar
-    public float sanityDrainRate = 3f;  // Rate at which sanity decreases
+    public float sanityDrainRate = 0.5f;  // Rate at which sanity decreases
 
     //Get set for health
     [SerializeField] private float _sanity = 100f; // Private backing field

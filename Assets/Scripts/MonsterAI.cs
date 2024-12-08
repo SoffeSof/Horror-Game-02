@@ -6,7 +6,7 @@ public class MonsterAI : MonoBehaviour
 {
     public Transform player; // Drag the player object into this field in the Inspector
     private UnityEngine.AI.NavMeshAgent agent; // The NavMeshAgent component used for pathfinding
-    public float respawnRadius = 10f; // Radius within which the monster respawns
+    public float respawnRadius = 30f; // Radius within which the monster respawns
     private float monsterSanityDrainRate = 12f; // Sanity drain rate when the monster is close to the player
     private float normalSanityDrainRate = 0.5f; // Default sanity drain rate when the monster is not close to the player
 
@@ -31,14 +31,14 @@ public class MonsterAI : MonoBehaviour
         int attempts = 0; // Number of attempts made so far
 
         UnityEngine.AI.NavMeshHit hit; // Sample the NavMesh to find a valid walkable position
-        float min = 30f;  // Minimum X value for respawn area
+        float min = -50f;  // Minimum X value for respawn area
         float max = 50f;  // Maximum X value for respawn area
 
-        do
+        do // Loop until a valid position is found or maxRetries is reached
         {
-            // Generate a random X and Z position within the specified range
-            float randomX = Random.Range(min, max); // Random X between minX and maxX
-            float randomZ = Random.Range(min, max); // Random Z between minZ and maxZ
+            // Decide whether to fix x or z to 30 or -30
+            float randomX = (Random.value > 0.5f) ? min : max; // Randomly pick 30 or -30 for x
+            float randomZ = Random.Range(min, max); // Randomize z within a range
 
             // Keep Y the same as the original transform position, or modify if needed
             float randomY = transform.position.y; 
@@ -53,7 +53,8 @@ public class MonsterAI : MonoBehaviour
                 return; // Exit once a valid position is found
             }
 
-            } while (attempts < maxRetries); // Retry if not found, until the max attempts are reached
+        } while (attempts < maxRetries); // Retry if not found, until the max attempts are reached
+
         Debug.LogWarning("Could not find a valid walkable position after " + maxRetries + " attempts."); // Log a warning if no valid position was found after maxRetries
     }
 
